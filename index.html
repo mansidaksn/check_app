@@ -1,27 +1,26 @@
 <html>
-    <body>
-        {{ edit_1 }}
-        <div id="app-status"></div> <!-- Added a div to display app status -->
-        <a href="https://www.example.com" target="_blank">Dummy Link</a>
-        {{ edit_2 }}
-        <script type="text/javascript">
-            window.onload = function() {
-                var appStatus = document.getElementById("app-status");
-                // Deep link to your app goes here
-                document.getElementById("l").src = "fb://";
+<body>
+    <div id="app-status"></div> <!-- Display app status -->
+    <script type="text/javascript">
+        window.onload = function() {
+            var appStatus = document.getElementById("app-status");
+            var iframe = document.createElement('iframe');
+            iframe.style.display = 'none'; // Make the iframe invisible
+            document.body.appendChild(iframe);
 
-                setTimeout(function() {
-                    // Check if the app is installed
-                    if (document.visibilityState === 'hidden') {
-                        appStatus.innerText = "App is installed"; // App is installed
-                    } else {
-                        appStatus.innerText = "App not installed"; // App is not installed
-                    }
-                    // Link to the App Store should go here -- only fires if deep link fails                
-                    // window.location = "https://itunes.apple.com/us/app/my.app/id123456789?ls=1&mt=8";
-                }, 500);
-            };
-        </script>
-        <iframe id="l" width="1" height="1" style="visibility:hidden"></iframe>
-    </body>
+            // Set a timeout to check the visibility state
+            setTimeout(function() {
+                if (document.hidden || document.visibilityState === 'hidden') {
+                    appStatus.innerText = "App is installed";
+                } else {
+                    appStatus.innerText = "App not installed";
+                    // Optionally, redirect to the App Store here
+                }
+            }, 1000); // Adjust the timing as needed
+
+            // Deep link that tries to open your app
+            iframe.src = "fb://"; // Change 'fb://profile' to your app's scheme
+        };
+    </script>
+</body>
 </html>
