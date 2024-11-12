@@ -1,26 +1,17 @@
+<!DOCTYPE html>
 <html>
-<body>
-    <div id="app-status"></div> <!-- Display app status -->
-    <script type="text/javascript">
-        window.onload = function() {
-            var appStatus = document.getElementById("app-status");
-            var iframe = document.createElement('iframe');
-            iframe.style.display = 'none'; // Make the iframe invisible
-            document.body.appendChild(iframe);
+    <body>
+        <script type="text/javascript">
+            window.onload = function() {
+                // Deep link to your app goes here
+                document.getElementById("l").src = "fb://";
 
-            // Set a timeout to check the visibility state
-            setTimeout(function() {
-                if (document.hidden || document.visibilityState === 'hidden') {
-                    appStatus.innerText = "App is installed";
-                } else {
-                    appStatus.innerText = "App not installed";
-                    // Optionally, redirect to the App Store here
-                }
-            }, 1000); // Adjust the timing as needed
-
-            // Deep link that tries to open your app
-            iframe.src = "fb://"; // Change 'fb://profile' to your app's scheme
-        };
-    </script>
-</body>
+                setTimeout(function() {
+                    // Link to the App Store should go here -- only fires if deep link fails                
+                    window.location = "https://mansidak.com";
+                }, 500);
+            };
+        </script>
+        <iframe id="l" width="1" height="1" style="visibility:hidden"></iframe>
+    </body>
 </html>
