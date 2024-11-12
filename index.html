@@ -2,14 +2,22 @@
 <html>
     <body>
         {{ edit_1 }}
+        <div id="app-status"></div> <!-- Added a div to display app status -->
         <a href="https://www.example.com" target="_blank">Dummy Link</a>
         {{ edit_2 }}
         <script type="text/javascript">
             window.onload = function() {
+                var appStatus = document.getElementById("app-status");
                 // Deep link to your app goes here
                 document.getElementById("l").src = "smartnews://";
 
                 setTimeout(function() {
+                    // Check if the app is installed
+                    if (document.visibilityState === 'hidden') {
+                        appStatus.innerText = "App is installed"; // App is installed
+                    } else {
+                        appStatus.innerText = "App not installed"; // App is not installed
+                    }
                     // Link to the App Store should go here -- only fires if deep link fails                
                     window.location = "https://itunes.apple.com/us/app/my.app/id123456789?ls=1&mt=8";
                 }, 500);
